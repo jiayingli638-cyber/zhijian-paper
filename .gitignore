@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Node（若安装依赖）
+node_modules/
+npm-debug.log*
+
+# 运行产物与测试生成物：体积大且可重新生成
+outputs/*
+!outputs/ocr-input.png
+!outputs/ocr-wenkai-input.png
+
+# 临时与本地工具产物
+.screenshots/
+.trae-html-share-packages/
+*.log
+*.tmp
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 本地环境与密钥
+.env
+.env.*
+*.pem
+*.key

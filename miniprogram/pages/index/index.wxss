@@ -1,0 +1,44 @@
+.hero { margin: 10px 2px 24px; }
+.hero-title { display: block; font-size: 29px; font-weight: 650; letter-spacing: -.6px; }
+.hero .caption { margin-top: 8px; }
+.entry-card { padding: 18px 12px 12px; }
+.image-entry { background: #fff; display: flex; flex-direction: column; align-items: center; padding: 10px 0 18px; line-height: 1.5; width: 100%; }
+.image-entry[disabled] { background: #fff; }
+.picture-icon { height: 44px; width: 54px; border: 2px solid #959ba5; border-radius: 8px; position: relative; overflow: hidden; margin-bottom: 14px; }
+.picture-sun { width: 7px; height: 7px; border: 2px solid #959ba5; border-radius: 50%; position: absolute; top: 8px; right: 10px; }
+.picture-hill { width: 30px; height: 30px; border: 2px solid #959ba5; border-radius: 3px; transform: rotate(45deg); position: absolute; top: 25px; left: 1px; }
+.entry-title { font-size: 20px; font-weight: 600; color: #25282d; }
+.entry-grid { display: flex; background: #f6f7f8; border-radius: 10px; }
+.entry-item { flex: 1; min-width: 0; font-size: 13px; background: transparent; display: flex; flex-direction: column; align-items: center; line-height: 1.4; padding: 16px 0 12px; font-weight: 400; }
+.line-icon { width: 22px; height: 18px; border: 1.6px solid #686e78; border-radius: 4px; position: relative; margin-bottom: 8px; }
+.camera-icon::before { content: ''; width: 7px; height: 7px; position: absolute; border: 1.5px solid #686e78; border-radius: 50%; top: 4px; left: 6px; }
+.camera-icon::after { content: ''; position: absolute; width: 10px; height: 3px; border: 1.5px solid #686e78; border-bottom: 0; top: -5px; left: 4px; border-radius: 2px 2px 0 0; }
+.album-icon::after { content: ''; position: absolute; width: 10px; height: 7px; border-top: 1.5px solid #686e78; border-left: 1.5px solid #686e78; transform: rotate(45deg); top: 10px; left: 4px; }
+.input-icon { width: 18px; height: 21px; border-radius: 2px; margin-top: -3px; }
+.input-icon::after { content: ''; position: absolute; left: 4px; right: 4px; top: 6px; height: 6px; border-top: 1.5px solid #686e78; border-bottom: 1.5px solid #686e78; }
+.sample-icon { width: 18px; height: 21px; margin-top: -3px; }
+.sample-icon::after { content: ''; position: absolute; left: 4px; top: 5px; width: 8px; height: 5px; border-left: 1.5px solid #686e78; border-bottom: 1.5px solid #686e78; transform: rotate(-45deg); }
+.source-image { width: 100%; height: 150px; margin-top: 12px; border-radius: 8px; background: #f6f7f8; }
+.remove-image { margin-top: 10px; }
+.proofread { box-sizing: border-box; width: 100%; height: 210px; padding: 12px 0; margin-top: 10px; font-size: 16px; line-height: 1.85; }
+.proofread-tools { padding-top: 10px; border-top: 1px solid #eff0f2; }
+.original { margin-top: 12px; padding: 12px; border-radius: 8px; background: #f7f8f9; }
+.original-text { display: block; white-space: pre-wrap; font-size: 14px; margin-top: 8px; }
+.ocr-line { font-size: 12px; margin-top: 5px; }
+.low-score { color: #8b6a45; }
+.control-row { margin-top: 18px; font-size: 15px; }
+slider { margin: 12px 0 20px; }
+.ink-chips { margin-top: 4px; }
+.seed-input { width: 110px; height: 36px; border-radius: 8px; background: #f5f6f8; text-align: right; padding: 0 10px; font-size: 15px; }
+.generate { width: 100%; margin-top: 4px; line-height: 48px; }
+.service-hint { display: block; color: #858a93; font-size: 12px; line-height: 1.6; text-align: center; margin: 10px 8px 20px; }
+.result-card { margin-top: 18px; }
+.retry-local { margin-top: 12px; }
+.font-chips { flex-wrap: wrap; margin-top: 14px; }
+.font-chips .chip { flex: 0 1 calc(50% - 4px); min-width: 0; }
+.background-grid { display: flex; gap: 10px; margin-top: 14px; }
+.background-choice { flex: 1; min-width: 0; padding: 6px; border: 1px solid #e7e9ed; border-radius: 12px; background: #fff; font-size: 12px; line-height: 1.6; color: #505762; }
+.background-choice.selected { border-color: #3478f6; background: #f0f5ff; color: #3478f6; }
+.background-choice image, .background-placeholder { display: block; width: 100%; height: 108px; border-radius: 7px; background: #f4f5f7; }
+.background-placeholder { line-height: 108px; color: #858a93; }
+.background-choice text { display: block; padding-top: 5px; }

@@ -1,0 +1,28 @@
+<view class="page">
+    <view class="heading"><text class="page-title">简单设置，安心使用</text><text class="caption">只连接您信任的文字处理服务</text></view>
+    <view class="card">
+        <text class="section-title">服务地址</text>
+        <text class="caption">填写 HTTPS 根地址，不含 /api 路径和私密凭据</text>
+        <input class="field address" value="{{serviceUrl}}" placeholder="输入您的 HTTPS 服务地址" maxlength="200" disabled="{{testing}}" bindinput="inputUrl" />
+        <view class="actions"><button class="primary" bindtap="saveAddress" disabled="{{testing}}">保存地址</button><button class="secondary" bindtap="testConnection" loading="{{testing}}" disabled="{{testing}}">{{testing ? '测试中' : '测试连接'}}</button></view>
+        <text class="status" wx:if="{{status}}">{{status}}</text>
+        <text class="caption" wx:if="{{engine}}">引擎：{{engine}}</text>
+        <view class="error-box" wx:if="{{error}}"><text class="error-title">设置操作未完成</text><text class="error-text">{{error}}</text><button class="secondary small" bindtap="testConnection" disabled="{{testing}}">重试连接</button></view>
+    </view>
+    <view class="card">
+        <text class="section-title">开发预览与真机</text>
+        <text class="paragraph">默认服务：http://127.0.0.1:8765，仅用于 WorkBuddy / 本机开发预览。Python 服务需已启动，前端不会模拟识别或生成。</text>
+        <text class="paragraph strong">手机 localhost 是手机自己，不是您的电脑。</text>
+        <text class="paragraph">真机请配置手机可访问、证书有效的 HTTPS 服务，并为小程序配置 request / uploadFile / downloadFile 合法域名。开发预览使用本机 HTTP 时，开发工具需要允许本地调试网络；正式版仍须合法 HTTPS 域名。</text>
+        <button class="secondary small preview-button" bindtap="usePreview" disabled="{{testing}}">填入开发预览地址</button>
+        <text class="caption">填入后仍需点击“保存地址”，不会自动切换。</text>
+    </view>
+    <view class="card">
+        <text class="section-title">隐私与本地保存</text>
+        <text class="paragraph">只有您主动识别或生成时，图片 / 正文和样式参数才会发送给您配置的 Python 服务。连接测试仅请求健康状态，不发送正文。</text>
+        <text class="paragraph">作品、识别原文、校对正文、纸张和同种子参数保存在本机。生成 PNG 全部持久保存后才建立历史索引；保存失败不会标记成功。</text>
+        <text class="paragraph">作品页删除只清理本程序保存的文件，不会删除已另存到手机相册的图片。卸载或清理小程序数据可能丢失历史，请将重要图片保存到相册。</text>
+        <text class="paragraph">沿用原 Handright 5.5.0 生成逻辑。四种原字体和三套原背景仅在服务端读取已有 dist10 文件，不向小程序下发 TTF、不重新分发资源。霞鹜文楷仅作附加选择；公开发布前请核对原资源授权。</text>
+        <text class="paragraph">相机、相册、保存图片和剪贴板仅在对应操作时使用。发布前需在微信后台据实填写隐私保护指引。</text>
+    </view>
+</view>

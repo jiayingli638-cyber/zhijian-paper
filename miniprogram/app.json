@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/works/works",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "navigationBarTitleText": "纸间",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f7fa",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#777b83",
+    "selectedColor": "#3478f6",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页", "iconPath": "assets/home.png", "selectedIconPath": "assets/home-selected.png" },
+      { "pagePath": "pages/works/works", "text": "作品", "iconPath": "assets/works.png", "selectedIconPath": "assets/works-selected.png" },
+      { "pagePath": "pages/settings/settings", "text": "设置", "iconPath": "assets/settings.png", "selectedIconPath": "assets/settings-selected.png" }
+    ]
+  },
+  "permission": {
+    "scope.writePhotosAlbum": { "desc": "将您生成的手写 PNG 图片保存到手机相册" }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

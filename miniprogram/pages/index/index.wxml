@@ -1,0 +1,75 @@
+<view class="page">
+    <view class="hero">
+        <text class="hero-title">让文字，留在纸上</text>
+        <text class="caption">从一张图片，到一页有温度的手写文字</text>
+    </view>
+
+    <view class="card entry-card">
+        <button class="image-entry" bindtap="chooseAlbum" disabled="{{!!busy}}">
+            <view class="picture-icon"><view class="picture-sun"></view><view class="picture-hill"></view></view>
+            <text class="entry-title">添加一张图片</text>
+            <text class="caption">识别文字，再亲手校对</text>
+        </button>
+        <view class="entry-grid">
+            <button class="entry-item" bindtap="takePhoto" disabled="{{!!busy}}"><view class="line-icon camera-icon"></view><text>拍照</text></button>
+            <button class="entry-item" bindtap="chooseAlbum" disabled="{{!!busy}}"><view class="line-icon album-icon"></view><text>相册</text></button>
+            <button class="entry-item" bindtap="inputEntry" disabled="{{!!busy}}"><view class="line-icon input-icon"></view><text>输入文字</text></button>
+            <button class="entry-item" bindtap="useExample" disabled="{{!!busy}}"><view class="line-icon sample-icon"></view><text>示例文字</text></button>
+        </view>
+        <image wx:if="{{imagePath}}" class="source-image" src="{{imagePath}}" mode="aspectFit" />
+        <button wx:if="{{imagePath}}" class="small secondary remove-image" bindtap="removeImage" disabled="{{busy}}">删除这张图片</button>
+        <text class="caption" wx:if="{{ocrNote}}">{{ocrNote}}</text>
+    </view>
+
+    <view id="proofread" class="card">
+        <view class="row"><text class="section-title">正文校对</text><text class="muted">{{text.length}} 字</text></view>
+        <text class="caption">核对错字、标点和换行，生成时保留您的排版</text>
+        <textarea class="proofread" value="{{text}}" placeholder="在这里输入文字，或先从图片识别…" maxlength="10000" focus="{{focusText}}" disabled="{{!!busy}}" bindinput="inputText" bindblur="finishText" adjust-position="{{true}}" show-confirm-bar="{{true}}" />
+        <view class="row proofread-tools">
+            <button class="secondary small" bindtap="copyText" disabled="{{!text || !!busy}}">复制正文</button>
+            <button wx:if="{{source === 'image'}}" class="secondary small" bindtap="toggleOriginal">{{showOriginal ? '收起识别原文' : '对照识别原文'}}</button>
+        </view>
+        <view class="original" wx:if="{{showOriginal}}">
+            <text class="muted">识别原文（只读）</text><text class="original-text" selectable="{{true}}">{{sourceText}}</text>
+            <view class="ocr-line" wx:for="{{ocrLines}}" wx:key="id"><text class="{{item.low ? 'low-score' : 'muted'}}">{{item.confidence}}% · {{item.text}}</text></view>
+        </view>
+    </view>
+
+    <view class="card">
+        <view class="row"><text class="section-title">原字体与纸张</text><text class="muted">Handright 5.5.0</text></view>
+        <text class="caption">沿用原程序的字形、字距、四边距和连通笔画扰动</text>
+        <view class="chips font-chips"><button wx:for="{{fonts}}" wx:key="id" class="chip {{params.font_id === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="selectFont" disabled="{{!!busy || item.available === false}}">{{item.name}}{{item.available === false ? ' · 缺失' : ''}}</button></view>
+        <view class="background-grid"><button wx:for="{{backgrounds}}" wx:key="id" class="background-choice {{params.background_id === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="selectBackground" disabled="{{!!busy || item.available === false}}"><image wx:if="{{item.thumbnailUrl}}" src="{{item.thumbnailUrl}}" mode="aspectFill" /><view wx:else class="background-placeholder">{{resourcesLoading ? '读取中' : '原纸张'}}</view><text>{{item.name}}{{item.available === false ? ' · 缺失' : ''}}</text></button></view>
+        <text class="caption" wx:if="{{resourceError}}">{{resourceError}}</text>
+        <button wx:if="{{resourceError}}" class="small secondary" bindtap="loadResources" disabled="{{resourcesLoading || !!busy}}">重新读取字体与背景</button>
+        <view class="row control-row" wx:if="{{params.background_id}}"><text class="muted">{{params.width}} × {{params.height}} · 原始纸张尺寸</text><button class="small secondary" bindtap="restorePreset" disabled="{{!!busy}}">恢复原预设</button></view>
+        <text class="caption" wx:if="{{params.background_id === 'bg2'}}">大图生成较慢且占用较多内存，请保持页面打开。</text>
+        <text class="caption">附加空白纸张（选择后切换小尺寸排版）</text>
+        <view class="chips"><button wx:for="{{papers}}" wx:key="id" class="chip {{!params.background_id && params.paper === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="selectPaper" disabled="{{!!busy}}">{{item.name}}</button></view>
+        <view class="control-row row"><text>字号</text><text class="muted">{{params.font_size}} px</text></view>
+        <slider min="18" max="400" step="1" value="{{params.font_size}}" activeColor="#3478f6" backgroundColor="#e9ebef" block-size="20" disabled="{{!!busy}}" bindchange="changeFont" />
+        <view class="row"><text>行距</text><text class="muted">{{params.line_spacing}} px</text></view>
+        <slider min="{{params.font_size}}" max="600" step="1" value="{{params.line_spacing}}" activeColor="#3478f6" backgroundColor="#e9ebef" block-size="20" disabled="{{!!busy}}" bindchange="changeSpacing" />
+        <view class="chips ink-chips"><button wx:for="{{inks}}" wx:key="id" class="chip {{params.ink === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="selectInk" disabled="{{!!busy}}">{{item.name}}</button></view>
+        <view class="row control-row"><text>平滑笔迹</text><switch color="#3478f6" checked="{{params.aa}}" disabled="{{!!busy}}" bindchange="changeAA" /></view>
+        <view class="row control-row"><text>墨迹质感</text><switch color="#3478f6" checked="{{params.ink_filter}}" disabled="{{!!busy}}" bindchange="changeFilter" /></view>
+        <view class="row control-row"><text>笔迹种子</text><input class="seed-input" type="number" maxlength="10" value="{{seedInput}}" disabled="{{!!busy}}" bindinput="inputSeed" bindblur="finishSeed" /></view>
+        <text class="caption">相同文字、字体、背景、参数与种子可复现笔迹。默认关闭平滑与墨迹后处理，保持原程序效果；原字体和背景只在服务端读取本机文件。</text>
+    </view>
+
+    <view class="error-box" wx:if="{{storageError}}"><text class="error-title">本地存储未完成</text><text class="error-text">{{storageError}}</text><button class="small secondary" bindtap="saveDraft" disabled="{{!!busy}}">重试保存草稿</button></view>
+    <view class="error-box" wx:if="{{error}}"><text class="error-title">这一步未完成</text><text class="error-text">{{error}}</text><view class="actions"><button wx:if="{{retryAction}}" class="small secondary" bindtap="retry" disabled="{{!!busy}}">{{retryAction === 'archive' ? '重试本地保存' : '重试'}}</button><button class="small secondary" bindtap="openSettings">检查服务设置</button></view></view>
+    <button class="primary generate" loading="{{!!busy}}" disabled="{{!!busy}}" bindtap="generate">{{busy ? statusText : '生成手写 PNG'}}</button>
+    <text class="service-hint">{{serviceHint}}</text>
+
+    <view class="card result-card" wx:if="{{resultPages.length}}">
+        <view class="row"><text class="section-title">{{resultSaved ? '你的纸上作品' : '生成预览'}}</text><text class="muted">{{resultPages.length}} 页</text></view>
+        <swiper class="viewer" current="{{resultIndex}}" bindchange="changePage" indicator-dots="{{false}}"><swiper-item wx:for="{{resultPages}}" wx:key="*this"><image src="{{item}}" mode="aspectFit" data-index="{{index}}" bindtap="previewImage" /></swiper-item></swiper>
+        <text class="page-count">{{resultIndex + 1}} / {{resultPages.length}} · 左右滑动，点击放大</text>
+        <text class="caption">{{resultNote}}</text>
+        <button wx:if="{{!resultSaved}}" class="secondary small retry-local" bindtap="retryLocalSave" disabled="{{!!busy}}">重试本地保存（不重新生成）</button>
+        <view class="actions"><button class="primary" bindtap="saveAll" loading="{{busy === 'album'}}" disabled="{{!resultSaved || !!busy}}">保存全部到相册</button><button class="secondary" bindtap="copyResultText" disabled="{{!!busy}}">复制作品文字</button></view>
+        <text class="caption" wx:if="{{albumProgress}}">{{albumProgress}}</text>
+        <text class="caption" wx:if="{{restored}}">再次生成将保存为一份新作品，原作品不会被覆盖。</text>
+    </view>
+</view>

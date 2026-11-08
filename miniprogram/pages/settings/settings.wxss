@@ -1,0 +1,7 @@
+.heading { margin: 8px 2px 22px; }
+.page-title { display: block; font-size: 24px; font-weight: 600; }
+.address { margin-top: 14px; }
+.status { display: block; font-size: 14px; margin-top: 14px; color: #505761; }
+.paragraph { display: block; font-size: 14px; color: #707680; line-height: 1.8; margin-top: 12px; word-break: break-all; }
+.strong { color: #353940; font-weight: 600; }
+.preview-button { margin-top: 16px; }

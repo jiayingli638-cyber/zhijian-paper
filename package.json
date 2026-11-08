@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "test:native": "node miniprogram/tests/validate.js && node --test miniprogram/tests/behavior.test.js",
+    "test:integration": "node --test miniprogram/tests/integration.test.js",
+    "test:browser": "node tests/browser.test.js"
+  },
+  "dependencies": {
+    "@playwright/cli": "^0.1.23",
+    "playwright": "^1.65.0-alpha-2026-10-30"
+  }
+}
