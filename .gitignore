@@ -10,10 +10,19 @@ env/
 node_modules/
 npm-debug.log*
 
-# 运行产物与测试生成物：体积大且可重新生成
+# 运行产物：默认不入库，仅保留示例与手写对照基线
 outputs/*
 !outputs/ocr-input.png
 !outputs/ocr-wenkai-input.png
+!outputs/ui-home.png
+!outputs/ui-original-result.png
+!outputs/native-controller-handwriting.png
+!outputs/handwriting-restore/
+outputs/handwriting-restore/*
+!outputs/handwriting-restore/*.png
+!outputs/tasks/
+outputs/tasks/*
+!outputs/tasks/49ddb14ebca74433a5d4cc04ca79f708/
 
 # 临时与本地工具产物
 .screenshots/
